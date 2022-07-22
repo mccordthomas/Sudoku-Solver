@@ -43,15 +43,15 @@ def check_full(board):
 
         
 def solve(row, col, board):
+     # check full board
+    if check_full(board):
+        return True
+    
     # boundary case
-    if col > len(board[row]):
+    if col+1 > len(board[row]):
         row = row + 1
         col = 0
-    
-    # check full board
-    if check_full(board):
-        return board
-    
+   
     # if open space
     if spot_is_zero(row, col, board):
         # check every number
@@ -59,6 +59,7 @@ def solve(row, col, board):
             if valid(row, col, board, i):
                 board[row][col] = i
                 if solve(row, col+1, board):
+                    board = board
                     return True
         
         # else backtrack
