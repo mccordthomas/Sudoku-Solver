@@ -4,7 +4,7 @@ def valid(row, col, board, i):
             return (i not in board[0:3, 0:3])
         
         elif row<=2 and 3<=col<=5:
-            return (i not in board[0:3, 3:6])  
+            return (i not in board[0:3, 3:6])
         
         elif row<=2 and 6<=col<=8:
             return (i not in board[0:3, 6:9])
@@ -27,7 +27,7 @@ def valid(row, col, board, i):
         elif 6<=row<=8 and 6<=col<=8:
             return (i not in board[6:9, 6:9])
         
-    return (i not in board[row, ::] and i not in [r[col] for r in board] and cubes)      
+    return (i not in board[row, ::] and i not in [r[col] for r in board] and cubes())      
         
 
 def spot_is_zero(row, col, board):
@@ -35,20 +35,22 @@ def spot_is_zero(row, col, board):
 
 
 def check_full(board):
+    check = 0
     for row in board:
-        if 0 not in row:
-            return True
+        if 0 in row:
+            check+=1 
+    return (check==0)
 
         
 def solve(row, col, board):
+    # boundary case
+    if col > len(board[row]):
+        row = row + 1
+        col = 0
+    
     # check full board
     if check_full(board):
         return board
-
-    # boundary case
-    if col == len(board[row]):
-        row = row+1
-        col = 0
     
     # if open space
     if spot_is_zero(row, col, board):
@@ -63,10 +65,7 @@ def solve(row, col, board):
         board[row][col] = 0
         
     else:
-        if col+1 > 8:
-            solve(row=row+1, col=0, board=board)
-        else:
-            solve(row, col+1, board)
+        solve(row, col+1, board)
 
 
 def sudoku(board):
