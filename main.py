@@ -1,3 +1,6 @@
+from tabnanny import check
+
+
 def valid(row, col, board, i):
     def cubes():
         if row<=2 and col<=2:
@@ -59,8 +62,10 @@ def solve(row, col, board):
             if valid(row, col, board, i):
                 board[row][col] = i
                 if solve(row, col+1, board):
-                    board = board
                     return True
+        
+        if check_full(board):
+            return True
         
         # else backtrack
         board[row][col] = 0
@@ -70,4 +75,7 @@ def solve(row, col, board):
 
 
 def sudoku(board):
-    print(solve(0, 0, board))
+    if solve(0, 0, board):
+        print(board)
+    else:
+        print('No solution possible')
