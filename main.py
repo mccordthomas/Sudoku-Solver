@@ -3,32 +3,32 @@
 def valid(row, col, board, i):
     # checks the 3x3 grid
     def cubes():
-        if row<=2 and col<=2:
-            return (i not in board[0:3, 0:3])
+        # top row of 3x3s
+        if row<=2:
+            if col<=2:
+                return (i not in board[0:3, 0:3])
+            if 3<=col<=5:
+                return (i not in board[0:3, 3:6])
+            if 6<=col<=8:
+                return (i not in board[0:3, 6:9])
         
-        elif row<=2 and 3<=col<=5:
-            return (i not in board[0:3, 3:6])
+        # middle row of 3x3s
+        elif 3<=row<=5:
+            if col<=2:
+                return (i not in board[3:6, 0:3])
+            if 3<=col<=5:
+                return (i not in board[3:6, 3:6])
+            if 6<=col<=8:
+                return (i not in board[3:6, 6:9])
         
-        elif row<=2 and 6<=col<=8:
-            return (i not in board[0:3, 6:9])
-        
-        elif 3<=row<=5 and col<=2:
-            return (i not in board[3:6, 0:3])
-        
-        elif 3<=row<=5 and 3<=col<=5:
-            return (i not in board[3:6, 3:6])
-        
-        elif 3<=row<=5 and 6<=col<=8:
-            return (i not in board[3:6, 6:9])
-        
-        elif 6<=row<=8 and col<=2:
-            return (i not in board[6:9, 0:3])
-        
-        elif 6<=row<=8 and 3<=col<=5:
-            return (i not in board[6:9, 3:6])
-        
-        elif 6<=row<=8 and 6<=col<=8:
-            return (i not in board[6:9, 6:9])
+        # last row of 3x3s
+        elif 6<=row<=8: 
+            if col<=2:
+                return (i not in board[6:9, 0:3])
+            if 3<=col<=5:
+                return (i not in board[6:9, 3:6])
+            if 6<=col<=8:
+                return (i not in board[6:9, 6:9])
         
     return (i not in board[row, ::] and i not in [r[col] for r in board] and cubes())      
         
