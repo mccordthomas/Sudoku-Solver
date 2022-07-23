@@ -1,7 +1,7 @@
-from tabnanny import check
 
-
+# validates if i is already in the current row, column or 3x3 grid
 def valid(row, col, board, i):
+    # checks the 3x3 grid
     def cubes():
         if row<=2 and col<=2:
             return (i not in board[0:3, 0:3])
@@ -32,11 +32,11 @@ def valid(row, col, board, i):
         
     return (i not in board[row, ::] and i not in [r[col] for r in board] and cubes())      
         
-
+# check if current position is an available spot
 def spot_is_zero(row, col, board):
     return (board[row][col] == 0)
 
-
+# check if board has been solved
 def check_full(board):
     check = 0
     for row in board:
@@ -44,9 +44,9 @@ def check_full(board):
             check+=1 
     return (check==0)
 
-        
+
 def solve(row, col, board):
-     # check full board
+    
     if check_full(board):
         return True
     
@@ -64,12 +64,13 @@ def solve(row, col, board):
                 if solve(row, col+1, board):
                     return True
         
+        # contingency check 
         if check_full(board):
             return True
         
         # else backtrack
         board[row][col] = 0
-        
+      
     else:
         solve(row, col+1, board)
 
@@ -78,4 +79,4 @@ def sudoku(board):
     if solve(0, 0, board):
         print(board)
     else:
-        print('No solution possible')
+        print('No possible solution')
